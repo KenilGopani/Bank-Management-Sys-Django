@@ -1,35 +1,98 @@
 {% extends 'base.html' %}
 
-{%block button %}
+{% block title %}Make Transaction{% endblock %}
 
-<div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/Accounts/home1">Home</a>
-        </li>
-    </ul>
-</div>
+
+{% block button %}
+<li class="nav-item">
+  <a class="nav-link" href="#">Services</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="#">Contect us</a>
+</li>
+</ul>
 {% endblock %}
 
-
 {% block functionality %}
-<div class="container" style="width: 400px;">
-    <form>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+<br>
+<h3 align="center">Beneficiary Details</h3>
+<hr>
+
+
+<div class="container" style="width: 450px;">
+
+  <form action="/Accounts/makeTransaction" method="POST">
+    {% csrf_token %}
+
+    {% for msg in messages %}
+      {% if 'safe' in msg.tags %}
+        <div align="center"><h5><strong>{{msg|safe}}</strong></h5><br></div>
+      {% else %}
+        <div align="center">
+        <h5><strong>
+        <font style="color: rgb(233, 57, 57);">{{msg}}</font>
+        </strong></h5><br>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
+      {% endif %}
+    {% endfor %}
+<!-- <font style="color: rgb(75, 224, 75);"></font> -->
+
+    <div class="form-group">
+      <label for="BeneficiaryName">Beneficiary Name</label>
+      <input type="text" name="BeneficiaryName" class="form-control" id="BeneficiaryName"
+        placeholder="Enter Beneficiary Name*" required>
+    </div><br>
+    <div class="form-group">
+      <label for="AccountNumber">Account Number</label>
+      <input type="number" name="AccountNumber" class="form-control" id="AccountNumber"
+        placeholder="Enter Account Number*" maxlength="8" required>
+    </div><br>
+    <div class="form-group">
+      <label for="ReAccountNumber">Re-Account Number</label>
+      <input type="number" name="ReAccountNumber" class="form-control" id="ReAccountNumber"
+        placeholder="Re-Enter Account Number*" maxlength="8" required>
+      <small id="AccountNumber" class="form-text text-muted">(Please ensure correctness),the beneficiary name and
+        account number. </small>
+    </div><br>
+    <div class="form-group">
+      <label for="TransactionAmount">Amount</label>
+      <input type="number" name="TransactionAmount" class="form-control" id="TransactionAmount"
+        placeholder="Enter Amount to Transfer*" required>
+    </div><br>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Accept Term & Condition</label>
+    </div><br>
+
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Make Payment</button>
+    </div>
+
+
+    <!-- Modal -->
+    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure, Do you want to make this Transaction ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+        <button type="submit" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+  </form>
+
+  <!-- <div align="center">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" align="center">Make Payment</button>
+  </div> -->
 </div>
-  
-  {% endblock %}
+
+{% endblock %}
